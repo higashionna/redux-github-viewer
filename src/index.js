@@ -13,6 +13,8 @@ import Profile from './components/pages/Profile'
 import Issue from './components/pages/Issue'
 import PullRequest from './components/pages/PullRequest'
 
+const Container = styled.div``
+
 const Content = styled.div`
   max-width: 896px;
   margin: 0 auto;
@@ -21,24 +23,26 @@ const Content = styled.div`
 
 const App = () => (
     <Router basename='/redux-github-viewer'>
-        <GlobalStyle />
-        <Header />
-        <Content>
-            <Switch>
-                <Route path="/profile">
-                    <Profile />
-                </Route>
-                <Route path="/issue">
-                    <Issue />
-                </Route>
-                <Route path="/pull-request">
-                    <PullRequest />
-                </Route>
-                <Route exact path="/">
-                    <Index />
-                </Route>
-            </Switch>
-        </Content>
+        <Container>
+            <GlobalStyle />
+            <Header />
+            <Content>
+                <Switch>
+                    <Route path="/profile">
+                        <Profile />
+                    </Route>
+                    <Route path="/issue">
+                        <Issue />
+                    </Route>
+                    <Route path="/pull-request">
+                        <PullRequest />
+                    </Route>
+                    <Route exact path="/">
+                        <Index />
+                    </Route>
+                </Switch>
+            </Content>
+        </Container>
     </Router>
 )
 

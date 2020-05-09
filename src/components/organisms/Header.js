@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { colors } from '../../styles/variable'
+import DropDown from './DropDown'
 
 const Container = styled.div`
   display: flex;
@@ -34,9 +35,23 @@ const NavigationLinks = styled.ul`
 const Title = styled.h1`
   white-space: nowrap;
 `
+
+const Menu = styled.div`
+  padding: 8px;
+  font-size: 1.2rem;
+`
+
+
 const links = [
   { to: '/issue', label: 'Issue' },
   { to: '/Profile', label: 'Profile' },
+  { to: '/pull-request', label: 'Pull Request' }
+]
+
+const menu = [
+  { to: '/', label: 'Top' },
+  { to: '/profile', label: 'Your Profile' },
+  { to: '/issue', label: 'Issue' },
   { to: '/pull-request', label: 'Pull Request' }
 ]
 
@@ -57,6 +72,9 @@ const Header = () => {
           )
         })}
       </NavigationLinks>
+      <Menu>
+        <DropDown menu={menu} />
+      </Menu>
     </Container>
   )
 }
