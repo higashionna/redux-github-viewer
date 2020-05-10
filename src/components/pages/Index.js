@@ -1,21 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import Issue from '../templates/Issue'
+import PullRequestTab from '../templates/PullRequest'
+import TabHeader from '../organisms/TabHeader'
 
-const Container = styled.div`
-  padding: 16px;
-
-  h1 {
-    text-align: center;
+const tabs = [
+  {
+    key: 'issue',
+    label: 'Issue'
+  },
+  {
+    key: 'pull-requests',
+    label: 'Pull Request'
   }
-`
+]
+
+const Container = styled.div``
+const Content = styled.div``
+
+const Tabs = [
+  {
+    key: 'issue',
+    component: <Issue />
+  },
+  {
+    key: 'pull-requests',
+    component: <PullRequestTab />
+  }
+]
 
 const Index = () => {
+  const [selected, setSelected] = useState('issue')
   return (
     <Container>
-      test1
+      <Content>
+        <TabHeader selected={selected} onChange={setSelected} tabs={tabs} />
+        {Tabs.map((item) => (selected === item.key ? item.component : <></>))}
+      </Content>
     </Container>
   )
 }
 
 export default Index
-
