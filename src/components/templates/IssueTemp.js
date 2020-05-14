@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { colors } from '../../styles/variable'
@@ -45,7 +45,10 @@ const Table = styled.table`
 `
 
 const IssueTemp = (props) => {
-  const list = Object.values(props.data)
+  const list = useMemo(() => {
+    const values = Object.values(props.data)
+    return values
+  }, [props.data])
   return (
     < Container >
       <Content>
