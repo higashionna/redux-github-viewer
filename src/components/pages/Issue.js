@@ -1,18 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
+import IssueItem from '../../containers/Issue'
 
 const Container = styled.div`
   padding: 16px;
 
-  h1 {
-    text-align: center;
-  }
 `
 
 const Profile = () => {
   return (
     < Container >
-      test2
+      <IssueItem />
     </Container >
   )
 }
