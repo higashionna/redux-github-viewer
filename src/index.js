@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import rootReducer from './reducers/rootReducer'
+
 import { GlobalStyle } from './styles'
 import styled from 'styled-components'
 
@@ -13,6 +17,9 @@ import Profile from './components/pages/Profile'
 import Issue from './components/pages/Issue'
 import PullRequest from './components/pages/PullRequest'
 
+import { devToolsEnhancer } from 'redux-devtools-extension'
+
+
 const Container = styled.div``
 
 const Content = styled.div`
@@ -20,30 +27,33 @@ const Content = styled.div`
   margin: 0 auto;
   padding: 32px 16px;
 `
+const store = createStore(rootReducer, devToolsEnhancer())
 
 const App = () => (
-    <Router basename='/redux-github-viewer'>
-        <Container>
-            <GlobalStyle />
-            <Header />
-            <Content>
-                <Switch>
-                    <Route path="/profile">
-                        <Profile />
-                    </Route>
-                    <Route path="/issue">
-                        <Issue />
-                    </Route>
-                    <Route path="/pull-request">
-                        <PullRequest />
-                    </Route>
-                    <Route exact path="/">
-                        <Index />
-                    </Route>
-                </Switch>
-            </Content>
-        </Container>
-    </Router>
+    <Provider store={store}>
+        <Router basename='/redux-github-viewer'>
+            <Container>
+                <GlobalStyle />
+                <Header />
+                <Content>
+                    <Switch>
+                        <Route path="/profile">
+                            <Profile />
+                        </Route>
+                        <Route path="/issue">
+                            <Issue />
+                        </Route>
+                        <Route path="/pull-request">
+                            <PullRequest />
+                        </Route>
+                        <Route exact path="/">
+                            <Index />
+                        </Route>
+                    </Switch>
+                </Content>
+            </Container>
+        </Router>
+    </Provider>
 )
 
 ReactDOM.render(<App />, document.getElementById('root'))

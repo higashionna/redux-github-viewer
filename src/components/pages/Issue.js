@@ -9,12 +9,12 @@ const Container = styled.div`
   }
 `
 
-const Issue = () => {
-    return (
-        <Container>
-            test2
-        </Container>
-    )
+const Profile = () => {
+  return (
+    < Container >
+      test2
+    </Container >
+  )
 }
 
-export default Issue
+export default Profile

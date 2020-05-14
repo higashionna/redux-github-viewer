@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import Issue from '../templates/Issue'
+import IssueContainer from '../../containers/Issue'
 import PullRequestTab from '../templates/PullRequest'
 import TabHeader from '../organisms/TabHeader'
 
@@ -21,7 +21,7 @@ const Content = styled.div``
 const Tabs = [
   {
     key: 'issue',
-    component: <Issue />
+    component: <IssueContainer />
   },
   {
     key: 'pull-requests',
