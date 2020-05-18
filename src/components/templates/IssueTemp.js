@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { colors } from '../../styles/variable'
 import IssueItem from '../organisms/IssueItem'
+import TextField from '../atoms/TextField'
 
 const borderStyle = `1px solid ${colors.border}`
 
@@ -44,13 +45,46 @@ const Table = styled.table`
   }
 `
 
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const Heading = styled.div``
+
+const SearchForm = styled.div`
+  padding: 8px 16px;
+  display: flex;
+  width: 100%;
+
+  .text-field-container {
+    width: 100%;
+  }
+`
+
 const IssueTemp = ({ data }) => {
+  const [searchWord, setSearchWord] = useState('')
   const list = useMemo(() => {
     const values = Object.values(data)
-    return values
-  }, [data])
+    if (!searchWord) {
+      return values
+    }
+    return values.filter((value) => value.title.includes(searchWord))
+  }, [data, searchWord])
   return (
     < Container >
+      <Header>
+        <Heading>
+          <h2>Issue</h2>
+        </Heading>
+        <SearchForm>
+          <TextField
+            value={searchWord}
+            placeholder="issue名で検索"
+            onChangeText={setSearchWord}
+          />
+        </SearchForm>
+      </Header>
       <Content>
         <Table>
           <thead>
