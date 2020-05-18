@@ -44,11 +44,11 @@ const Table = styled.table`
   }
 `
 
-const IssueTemp = (props) => {
+const IssueTemp = ({ data }) => {
   const list = useMemo(() => {
-    const values = Object.values(props.data)
+    const values = Object.values(data)
     return values
-  }, [props.data])
+  }, [data])
   return (
     < Container >
       <Content>

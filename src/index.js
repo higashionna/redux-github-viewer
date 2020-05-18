@@ -14,7 +14,7 @@ import Header from './components/organisms/Header'
 
 import Index from './components/pages/Index'
 import Profile from './components/pages/Profile'
-import Issue from './components/pages/Issue'
+import Issue from './containers/Issue'
 import PullRequest from './components/pages/PullRequest'
 
 import { devToolsEnhancer } from 'redux-devtools-extension'

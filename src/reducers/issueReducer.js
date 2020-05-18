@@ -22,7 +22,7 @@ const initialData = {
     }
 }
 
-const intialState = ({ datas: initialData })
+const intialState = ({ data: initialData })
 
 const issueReducer = (state = intialState) => {
     return state

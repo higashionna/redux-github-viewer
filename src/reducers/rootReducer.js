@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 
-import issueReducer from './issue/reducer'
+import issue from './issueReducer'
 
 const rootReducer = combineReducers({
-    issue: issueReducer
+    issue
 })
 
 export default rootReducer

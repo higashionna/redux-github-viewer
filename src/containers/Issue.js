@@ -4,7 +4,7 @@ import IssueTemp from '../components/templates/IssueTemp'
 
 const mapStateToProps = ({ issue }) => {
   return {
-    data: issue.datas,
+    data: issue.data,
   }
 }
 
