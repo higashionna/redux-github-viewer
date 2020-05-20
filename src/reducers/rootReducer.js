@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux'
 
-import issue from './issueReducer'
+import issue from './issue'
+import modal from './ui/modal'
 
 const rootReducer = combineReducers({
-    issue
+    issue,
+    ui: combineReducers({ modal })
 })
 
 export default rootReducer

@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import IssueTemp from '../components/templates/IssueTemp'
+import { actionCreators } from '../actions/index'
 
 
 const mapStateToProps = ({ issue }) => {
@@ -8,4 +9,11 @@ const mapStateToProps = ({ issue }) => {
   }
 }
 
-export default connect(mapStateToProps)(IssueTemp)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    showModal: (prams) => dispatch(actionCreators.showModal(prams)),
+    removeModal: () => dispatch(actionCreators.removeModal())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(IssueTemp)

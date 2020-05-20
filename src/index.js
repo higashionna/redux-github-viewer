@@ -18,6 +18,7 @@ import Issue from './containers/Issue'
 import PullRequest from './components/pages/PullRequest'
 
 import { devToolsEnhancer } from 'redux-devtools-extension'
+import Modal from './containers/Modal'
 
 
 const Container = styled.div``
@@ -51,6 +52,7 @@ const App = () => (
                         </Route>
                     </Switch>
                 </Content>
+                <Modal />
             </Container>
         </Router>
     </Provider>

@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import { colors } from '../../styles/variable'
 import IssueItem from '../organisms/IssueItem'
 import TextField from '../atoms/TextField'
+import Button from '../atoms/Button'
+import NewIssue from './NewIssue'
 
 const borderStyle = `1px solid ${colors.border}`
 
@@ -62,7 +64,11 @@ const SearchForm = styled.div`
   }
 `
 
-const IssueTemp = ({ data }) => {
+const Action = styled.div`
+  display: flex;
+`
+
+const IssueTemp = ({ data, showModal, removeModal }) => {
   const [searchWord, setSearchWord] = useState('')
   const list = useMemo(() => {
     const values = Object.values(data)
@@ -71,6 +77,9 @@ const IssueTemp = ({ data }) => {
     }
     return values.filter((value) => value.title.includes(searchWord))
   }, [data, searchWord])
+
+  const onNew = () => showModal({ component: <NewIssue onClose={removeModal} /> })
+
   return (
     < Container >
       <Header>
@@ -84,6 +93,11 @@ const IssueTemp = ({ data }) => {
             onChangeText={setSearchWord}
           />
         </SearchForm>
+        <Action>
+          <Button type="primary" onClick={onNew}>
+            New
+          </Button>
+        </Action>
       </Header>
       <Content>
         <Table>
@@ -126,7 +140,8 @@ const IssueTemp = ({ data }) => {
 
 
 IssueTemp.propTypes = {
-  data: PropTypes.object
+  data: PropTypes.object,
+  showModal: PropTypes.func
 }
 
 export default IssueTemp
