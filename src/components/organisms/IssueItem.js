@@ -17,7 +17,7 @@ const Container = styled.tr`
   }
 `
 
-const IssueItem = ({ issue, onClick }) => {
+const IssueItem = ({ checked, onClick, onCheck, issue }) => {
   const { id, title, status, createBy, createdAt, updatedAt } = issue
   const _onClick = useCallback(
     () => {
@@ -25,10 +25,17 @@ const IssueItem = ({ issue, onClick }) => {
     },
     [issue, onClick]
   )
+  const _onCheck = useCallback(
+    (e) => {
+      e.stopPropagation()
+      onCheck(issue)
+    },
+    [issue, onCheck]
+  )
   return (
     <Container key={id} onClick={_onClick}>
       <td>
-        <input type="checkbox" />
+        <input type="checkbox" checked={checked} onClick={_onCheck} />
       </td>
       <td className="outline">{title}</td>
       <td>{statusLabel[status]}</td>
@@ -40,8 +47,10 @@ const IssueItem = ({ issue, onClick }) => {
 }
 
 IssueItem.propTypes = {
-  issue: PropTypes.object,
-  onClick: PropTypes.func
+  checked: PropTypes.bool,
+  onCheck: PropTypes.func,
+  onClick: PropTypes.func,
+  issue: PropTypes.object
 }
 
 export default IssueItem

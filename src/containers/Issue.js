@@ -14,12 +14,4 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(actionCreators, dispatch)
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     showModal: (prams) => dispatch(actionCreators.showModal(prams)),
-//     removeModal: () => dispatch(actionCreators.removeModal()),
-//     addIssue: () => dispatch(actionCreators.addIssue())
-//   }
-// }
-
 export default connect(mapStateToProps, mapDispatchToProps)(IssueTemp)

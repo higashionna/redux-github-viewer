@@ -69,7 +69,14 @@ const Action = styled.div`
   display: flex;
 `
 
-const IssueTemp = ({ data, showModal, removeModal, addIssue, updateIssue }) => {
+const IssueTemp = ({
+  data,
+  showModal,
+  removeModal,
+  addIssue,
+  updateIssue,
+  removeIssue
+}) => {
   const [searchWord, setSearchWord] = useState('')
   const list = useMemo(() => {
     const values = Object.values(data)
@@ -104,6 +111,40 @@ const IssueTemp = ({ data, showModal, removeModal, addIssue, updateIssue }) => {
     [showModal, removeModal, updateIssue]
   )
 
+  const [checked, setChecked] = useState({})
+  const allChecked = useMemo(
+    () =>
+      Object.keys(data).length &&
+      Object.keys(checked).length === Object.keys(data).length,
+    [data, checked]
+  )
+  const onCheckAll = useCallback(() => {
+    if (allChecked) {
+      setChecked({})
+      return
+    }
+    setChecked(data)
+  }, [allChecked, data])
+
+  const onCheck = useCallback(
+    ({ id }) => {
+      const newIds = { ...checked }
+      if (checked[id]) {
+        delete newIds[id]
+      } else {
+        newIds[id] = data[id]
+      }
+      setChecked(newIds)
+    },
+    [data, checked]
+  )
+
+  const onRemove = useCallback(() => {
+    Object.values(checked).forEach((issue) => {
+      removeIssue({ issue })
+    })
+  }, [checked, removeIssue])
+
   return (
     < Container >
       <Header>
@@ -121,6 +162,9 @@ const IssueTemp = ({ data, showModal, removeModal, addIssue, updateIssue }) => {
           <Button type="primary" onClick={onNew}>
             New
           </Button>
+          <Button type="danger" onClick={onRemove}>
+            Delete
+          </Button>
         </Action>
       </Header>
       <Content>
@@ -128,7 +172,11 @@ const IssueTemp = ({ data, showModal, removeModal, addIssue, updateIssue }) => {
           <thead>
             <tr>
               <th>
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  defaultChecked={allChecked}
+                  onClick={onCheckAll}
+                />
               </th>
               <th></th>
               <th>ステータス</th>
@@ -145,6 +193,8 @@ const IssueTemp = ({ data, showModal, removeModal, addIssue, updateIssue }) => {
                     key={item.id}
                     issue={item}
                     onClick={onEdit}
+                    checked={checked[item.id]}
+                    onCheck={onCheck}
                   />
                 )
               })
@@ -169,7 +219,8 @@ IssueTemp.propTypes = {
   showModal: PropTypes.func,
   removeModal: PropTypes.func,
   addIssue: PropTypes.func,
-  updateIssue: PropTypes.func
+  updateIssue: PropTypes.func,
+  removeIssue: PropTypes.func,
 }
 
 export default IssueTemp
