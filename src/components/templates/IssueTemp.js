@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useCallback } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { colors } from '../../styles/variable'
@@ -68,7 +68,7 @@ const Action = styled.div`
   display: flex;
 `
 
-const IssueTemp = ({ data, showModal, removeModal }) => {
+const IssueTemp = ({ data, showModal, removeModal, addIssue }) => {
   const [searchWord, setSearchWord] = useState('')
   const list = useMemo(() => {
     const values = Object.values(data)
@@ -78,7 +78,15 @@ const IssueTemp = ({ data, showModal, removeModal }) => {
     return values.filter((value) => value.title.includes(searchWord))
   }, [data, searchWord])
 
-  const onNew = () => showModal({ component: <NewIssue onClose={removeModal} /> })
+  const onNew = useCallback(() => {
+    const onAdd = (payload) => {
+      addIssue(payload)
+      removeModal()
+    }
+    showModal({
+      component: <NewIssue onSubmit={onAdd} onClose={removeModal} />
+    })
+  }, [showModal, removeModal, addIssue])
 
   return (
     < Container >
@@ -141,7 +149,9 @@ const IssueTemp = ({ data, showModal, removeModal }) => {
 
 IssueTemp.propTypes = {
   data: PropTypes.object,
-  showModal: PropTypes.func
+  showModal: PropTypes.func,
+  removeModal: PropTypes.func,
+  addIssue: PropTypes.func
 }
 
 export default IssueTemp

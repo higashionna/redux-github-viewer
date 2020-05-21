@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import TextField from '../../components/atoms/TextField'
 import TextArea from '../../components/atoms/TextArea'
 import Button from '../../components/atoms/Button'
 import LabelButton from '../../components/atoms/LabelButton'
+import { colors } from '../../styles/variable'
 
 const Container = styled.div`
   max-width: 598px;
@@ -41,9 +42,46 @@ const Footer = styled.div`
   padding: 8px;
 `
 
-const NewIssue = ({ onClose }) => {
+const ErrorMessage = styled.p`
+  color: ${colors.danger};
+  background: #d73a4959;
+  padding: 8px;
+  border-radius: 6px;
+`
+
+const MessageContainer = styled.div`
+  padding: 16px;
+  min-height: 100px;
+`
+
+const NewIssue = ({ onSubmit, onClose }) => {
+    const [validationError, setValidationError] = useState('')
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
+
+    const _onSubmit = useCallback(() => {
+        if (!title) {
+            setValidationError('タイトルを入力してください')
+            return
+        }
+
+        if (!description) {
+            setValidationError('説明を入力してください')
+            return
+        }
+
+        const now = new Date()
+        onSubmit({
+            issue: {
+                title,
+                description,
+                createBy: "username",
+                status: 0,
+                createdAt: now,
+                updatedAt: now
+            }
+        })
+    }, [title, description, onSubmit, setValidationError])
 
     return (
         <Container>
@@ -66,8 +104,11 @@ const NewIssue = ({ onClose }) => {
                     />
                 </Field>
             </Form>
+            <MessageContainer>
+                {validationError && <ErrorMessage>{validationError}</ErrorMessage>}
+            </MessageContainer>
             <Footer>
-                <Button type="primary">
+                <Button type="primary" onClick={_onSubmit}>
                     作成
                 </Button>
                 <LabelButton onClick={onClose}>閉じる</LabelButton>
@@ -77,7 +118,8 @@ const NewIssue = ({ onClose }) => {
 }
 
 NewIssue.propTypes = {
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
+    onSubmit: PropTypes.func
 }
 
 export default NewIssue
