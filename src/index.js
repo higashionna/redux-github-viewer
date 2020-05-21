@@ -13,7 +13,8 @@ import styled from 'styled-components'
 import Header from './components/organisms/Header'
 
 import Index from './components/pages/Index'
-import Profile from './components/pages/Profile'
+import Profile from './containers/Profile'
+
 import Issue from './containers/Issue'
 import PullRequest from './components/pages/PullRequest'
 
