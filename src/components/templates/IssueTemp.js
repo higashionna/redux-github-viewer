@@ -6,6 +6,7 @@ import IssueItem from '../organisms/IssueItem'
 import TextField from '../atoms/TextField'
 import Button from '../atoms/Button'
 import NewIssue from './NewIssue'
+import EditIssue from './EditIssue'
 
 const borderStyle = `1px solid ${colors.border}`
 
@@ -68,7 +69,7 @@ const Action = styled.div`
   display: flex;
 `
 
-const IssueTemp = ({ data, showModal, removeModal, addIssue }) => {
+const IssueTemp = ({ data, showModal, removeModal, addIssue, updateIssue }) => {
   const [searchWord, setSearchWord] = useState('')
   const list = useMemo(() => {
     const values = Object.values(data)
@@ -87,6 +88,21 @@ const IssueTemp = ({ data, showModal, removeModal, addIssue }) => {
       component: <NewIssue onSubmit={onAdd} onClose={removeModal} />
     })
   }, [showModal, removeModal, addIssue])
+
+  const onEdit = useCallback(
+    (issue) => {
+      showModal({
+        component: (
+          <EditIssue
+            issue={issue}
+            onSubmit={updateIssue}
+            onClose={removeModal}
+          />
+        )
+      })
+    },
+    [showModal, removeModal, updateIssue]
+  )
 
   return (
     < Container >
@@ -128,6 +144,7 @@ const IssueTemp = ({ data, showModal, removeModal, addIssue }) => {
                   <IssueItem
                     key={item.id}
                     issue={item}
+                    onClick={onEdit}
                   />
                 )
               })
@@ -151,7 +168,8 @@ IssueTemp.propTypes = {
   data: PropTypes.object,
   showModal: PropTypes.func,
   removeModal: PropTypes.func,
-  addIssue: PropTypes.func
+  addIssue: PropTypes.func,
+  updateIssue: PropTypes.func
 }
 
 export default IssueTemp

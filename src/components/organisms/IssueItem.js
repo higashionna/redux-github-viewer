@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import dayjs from 'dayjs'
@@ -17,10 +17,16 @@ const Container = styled.tr`
   }
 `
 
-const IssueItem = ({ issue }) => {
+const IssueItem = ({ issue, onClick }) => {
   const { id, title, status, createBy, createdAt, updatedAt } = issue
+  const _onClick = useCallback(
+    () => {
+      onClick(issue)
+    },
+    [issue, onClick]
+  )
   return (
-    <Container key={id}>
+    <Container key={id} onClick={_onClick}>
       <td>
         <input type="checkbox" />
       </td>
@@ -34,7 +40,8 @@ const IssueItem = ({ issue }) => {
 }
 
 IssueItem.propTypes = {
-  issue: PropTypes.object
+  issue: PropTypes.object,
+  onClick: PropTypes.func
 }
 
 export default IssueItem
