@@ -71,6 +71,7 @@ const Action = styled.div`
 
 const IssueTemp = ({
   data,
+  user,
   showModal,
   removeModal,
   addIssue,
@@ -92,9 +93,9 @@ const IssueTemp = ({
       removeModal()
     }
     showModal({
-      component: <NewIssue onSubmit={onAdd} onClose={removeModal} />
+      component: <NewIssue user={user} onSubmit={onAdd} onClose={removeModal} />
     })
-  }, [showModal, removeModal, addIssue])
+  }, [user, showModal, removeModal, addIssue])
 
   const onEdit = useCallback(
     (issue) => {
@@ -215,6 +216,7 @@ const IssueTemp = ({
 
 
 IssueTemp.propTypes = {
+  user: PropTypes.object,
   data: PropTypes.object,
   showModal: PropTypes.func,
   removeModal: PropTypes.func,

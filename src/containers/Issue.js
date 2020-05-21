@@ -4,9 +4,10 @@ import IssueTemp from '../components/templates/IssueTemp'
 import { actionCreators } from '../actions/index'
 
 
-const mapStateToProps = ({ issue }) => {
+const mapStateToProps = ({ user, issue }) => {
   return {
     data: issue.data,
+    user
   }
 }
 
